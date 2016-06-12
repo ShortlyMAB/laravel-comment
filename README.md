@@ -16,11 +16,89 @@ Via Composer
 $ composer require actuallymab/laravel-comment
 ```
 
+Add service provider to your app.php file
+
+``` php
+\Actuallymab\LaravelComment\LaravelCommentServiceProvider::class
+```
+
+Publish & Migrate comments table.
+``` bash
+$ php artisan vendor:publish
+$ php artisan migrate
+```
+
+Add `CanComment` trait to your User model.
+``` php
+use Actuallymab\LaravelComment\CanComment;
+```
+
+Add `Commentable` trait to your commentable model(s).
+``` php
+use Actuallymab\LaravelComment\Commentable;
+```
+
+If you want to have your own Comment Model create a new one and extend my Comment model.
+``` php
+class Comment extends Actuallymab\LaravelComment\Comment
+{
+  ...
+}
+```
+
+Comment package comes with several modes.
+
+1- If you want to Users can rate your model(s) with comment set `canBeRated` to true in your `Commentable` model.
+``` php
+class Product extends Model {
+  use Commentable;
+
+  protected $canBeRated = true;
+
+  ...
+}
+```
+
+2- If you want to approve comments for your commentable models, you must set `mustBeApproved` to true in your `Commentable` model.
+``` php
+class Product extends Model {
+  use Commentable;
+
+  protected $mustBeApproved = true;
+
+  ...
+}
+```
+
+3- You don't want to approve comments for all users (think this as you really want to approve your own comments?). So add your `User` model to `isAdmin` property and set it true if user is admin.
+
+``` php
+class User extends Model {
+  use CanComment;
+
+  protected $isAdmin = true;
+
+  ...
+}
+```
+
 ## Usage
 
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+$user = App\User::find(1);
+$product = App\Product::find(1);
+
+// $user->comment(Commentable $model, $comment = '', $rate = 0);
+$user->comment($product, 'Lorem ipsum ..', 3);
+
+// approve it -- if you are admin or you don't use mustBeApproved option, it is not necessary
+$product->comments[0]->approve();
+
+// get avg rating -- it calculates approved average rate.
+$product->averageRate();
+
+// get total comment count -- it calculates approved comments count.
+$product->totalCommentCount();
 ```
 
 ## Change log
