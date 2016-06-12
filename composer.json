@@ -1,0 +1,48 @@
+{
+    "name": "actuallymab/laravel-comment",
+    "type": "library",
+    "description": "Just another comment system for laravel projects.",
+    "keywords": [
+        "actuallymab",
+        "laravel-comment"
+    ],
+    "homepage": "https://github.com/actuallymab/laravel-comment",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Mehmet Aydin Bahadir",
+            "email": "mehmet.aydin.bahadir@gmail.com",
+            "homepage": "http://www.actuallymab.me",
+            "role": "Software Engineer"
+        }
+    ],
+    "require": {
+        "illuminate/support": "~5.1",
+        "illuminate/database": "5.1.*|5.2.*",
+        "php" : "~5.5|~7.0"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "phpunit/phpunit" : "4.*",
+        "mockery/mockery": "~0.9.0",
+        "orchestra/testbench": "~3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Actuallymab\\LaravelComment\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Actuallymab\\LaravelComment\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
