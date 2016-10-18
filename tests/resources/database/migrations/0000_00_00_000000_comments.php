@@ -1,15 +1,12 @@
 <?php
 /** actuallymab | 12.06.2016 - 02:00 */
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
-
-class CreateCommentsTable extends Migration
+class Comments extends \Illuminate\Database\Migrations\Migration
 {
 
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('comments', function ($table) {
             $table->increments('id');
             $table->integer('commentable_id')->nullable();
             $table->string('commentable_type')->nullable();

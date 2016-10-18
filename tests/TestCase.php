@@ -15,19 +15,10 @@ abstract class TestCase extends Orchestra
     {
         parent::setUp();
 
-        $this->artisan('migrate', [
-            '--database' => 'testbench',
+        $this->loadMigrationsFrom([
+            '--database' => 'testing',
             '--realpath' => realpath(__DIR__ . '/resources/database/migrations'),
         ]);
-
-        $this->artisan('migrate', [
-            '--database' => 'testbench',
-            '--realpath' => realpath(__DIR__ . '/../database/migrations'),
-        ]);
-
-        $this->beforeApplicationDestroyed(function () {
-            $this->artisan('migrate:rollback');
-        });
     }
 
     /**
@@ -36,8 +27,8 @@ abstract class TestCase extends Orchestra
      */
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', [
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.connections.testing', [
             'driver'   => 'sqlite',
             'database' => ':memory:',
             'prefix'   => '',
