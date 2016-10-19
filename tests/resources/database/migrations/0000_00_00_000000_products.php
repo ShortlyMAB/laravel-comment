@@ -3,7 +3,6 @@
 
 class Products extends \Illuminate\Database\Migrations\Migration
 {
-
     public function up()
     {
         Schema::create('products', function ($table) {
@@ -16,5 +15,4 @@ class Products extends \Illuminate\Database\Migrations\Migration
     {
         Schema::drop('products');
     }
-
 }

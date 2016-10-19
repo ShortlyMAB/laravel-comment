@@ -3,11 +3,9 @@
 
 class Users extends \Illuminate\Database\Migrations\Migration
 {
-
     public function up()
     {
-        Schema::create('users', function($table)
-        {
+        Schema::create('users', function ($table) {
             $table->increments('id');
             $table->string('name', 100);
         });
