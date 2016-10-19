@@ -4,7 +4,6 @@
 
 namespace Actuallymab\LaravelComment\Tests\Models;
 
-
 use Actuallymab\LaravelComment\CanComment;
 use Illuminate\Database\Eloquent\Model;
 

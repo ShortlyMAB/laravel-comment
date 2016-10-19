@@ -45,5 +45,4 @@ abstract class TestCase extends Orchestra
             LaravelCommentServiceProvider::class
         ];
     }
-
 }

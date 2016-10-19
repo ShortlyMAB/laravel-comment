@@ -6,7 +6,6 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateCommentsTable extends Migration
 {
-
     public function up()
     {
         Schema::create('comments', function (Blueprint $table) {
@@ -26,5 +25,4 @@ class CreateCommentsTable extends Migration
     {
         Schema::drop('comments');
     }
-
 }

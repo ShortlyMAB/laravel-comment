@@ -10,7 +10,6 @@ use Faker\Provider\Lorem;
 /** actuallymab | 12.06.2016 - 13:52 */
 class CommentTest extends TestCase
 {
-    
     private $faker;
 
     /**
@@ -166,5 +165,4 @@ class CommentTest extends TestCase
             'name' => $this->faker->word
         ])->setCanBeRated($canBeRated)->setMustBeApproved($mustBeApproved);
     }
-
 }

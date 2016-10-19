@@ -4,7 +4,6 @@
 
 namespace Actuallymab\LaravelComment;
 
-
 use Actuallymab\LaravelComment\Models\Comment;
 
 trait Commentable
@@ -49,5 +48,4 @@ trait Commentable
     {
         return ($this->getCanBeRated()) ? $this->comments()->where('approved', true)->avg('rate') : 0;
     }
-
 }

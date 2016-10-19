@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class LaravelCommentServiceProvider extends ServiceProvider
 {
-
     protected $defer = false;
 
     /**
@@ -28,6 +27,5 @@ class LaravelCommentServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        
     }
 }
