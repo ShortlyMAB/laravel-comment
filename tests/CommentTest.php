@@ -149,9 +149,12 @@ class CommentTest extends TestCase
      */
     protected function createUser($isAdmin = false)
     {
-        return User::create([
+        $user = User::create([
             'name' => $this->faker->word
-        ])->setIsAdmin($isAdmin);
+        ]);
+
+        $user->isAdmin = $isAdmin;
+        return $user;
     }
 
     /**
