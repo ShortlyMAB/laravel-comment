@@ -3,7 +3,6 @@
 
 class Comments extends \Illuminate\Database\Migrations\Migration
 {
-
     public function up()
     {
         Schema::create('comments', function ($table) {
@@ -23,5 +22,4 @@ class Comments extends \Illuminate\Database\Migrations\Migration
     {
         Schema::drop('comments');
     }
-
 }
