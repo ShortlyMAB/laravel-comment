@@ -12,7 +12,7 @@ class User extends Model
 {
     use CanComment;
 
-    protected $isAdmin = false;
+    public $isAdmin = false;
 
     protected $fillable = [
         'name'
@@ -21,12 +21,9 @@ class User extends Model
     public $timestamps = false;
 
     /**
-     * @param $isAdmin
-     * @return $this
+     * @return bool
      */
-    public function setIsAdmin($isAdmin)
-    {
-        $this->isAdmin = $isAdmin;
-        return $this;
+    public function isAdmin() {
+        return $this->isAdmin;
     }
 }

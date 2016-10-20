@@ -39,7 +39,7 @@ trait CanComment
      */
     public function isAdmin()
     {
-        return isset($this->isAdmin) ? $this->isAdmin : false;
+        return false;
     }
 
     /**

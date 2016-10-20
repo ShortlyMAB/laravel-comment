@@ -69,13 +69,20 @@ class Product extends Model {
 }
 ```
 
-3- You don't want to approve comments for all users (think this as you really want to approve your own comments?). So add your `User` model to `isAdmin` property and set it true if user is admin.
+3- You don't want to approve comments for all users (think this as you really want to approve your own comments?). So add your `User` model an `isAdmin` method and return it true if user is admin.
 
 ``` php
 class User extends Model {
   use CanComment;
+  
+  protected $fillable = [
+    'isAdmin',
+    ....
+  ];
 
-  protected $isAdmin = true;
+  public function isAdmin() {
+    return $this->isAdmin;
+  }
 
   ...
 }
