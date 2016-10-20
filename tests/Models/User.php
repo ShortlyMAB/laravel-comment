@@ -4,7 +4,6 @@
 
 namespace Actuallymab\LaravelComment\Tests\Models;
 
-
 use Actuallymab\LaravelComment\CanComment;
 use Illuminate\Database\Eloquent\Model;
 
@@ -23,7 +22,8 @@ class User extends Model
     /**
      * @return bool
      */
-    public function isAdmin() {
+    public function isAdmin()
+    {
         return $this->isAdmin;
     }
 }
