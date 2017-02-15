@@ -25,7 +25,7 @@ trait CanComment
             'comment'        => $commentText,
             'rate'           => ($commentable->getCanBeRated()) ? $rate : null,
             'approved'       => ($commentable->mustBeApproved() && ! $this->isAdmin()) ? false : true,
-            'commented_id'   => $this->id,
+            'commented_id'   => $this->id(),
             'commented_type' => get_class()
         ]);
 
