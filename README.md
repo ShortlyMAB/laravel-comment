@@ -22,13 +22,13 @@ Just another comment system for laravel projects.
 Via Composer
 
 ``` bash
-$ composer require actuallymab/laravel-comment
+$ composer require ufutx/laravel-comment
 ```
 
 Add service provider to your app.php file
 
 ``` php
-\Actuallymab\LaravelComment\LaravelCommentServiceProvider::class
+\Ufutx\LaravelComment\LaravelCommentServiceProvider::class
 ```
 
 Publish & Migrate comments table.
@@ -39,17 +39,17 @@ $ php artisan migrate
 
 Add `CanComment` trait to your User model.
 ``` php
-use Actuallymab\LaravelComment\CanComment;
+use Ufutx\LaravelComment\CanComment;
 ```
 
 Add `Commentable` trait to your commentable model(s).
 ``` php
-use Actuallymab\LaravelComment\Commentable;
+use Ufutx\LaravelComment\Commentable;
 ```
 
 If you want to have your own Comment Model create a new one and extend my Comment model.
 ``` php
-class Comment extends Actuallymab\LaravelComment\Comment
+class Comment extends Ufutx\LaravelComment\Comment
 {
   ...
 }
