@@ -1,13 +1,13 @@
 <?php
 /** actuallymab | 12.06.2016 - 01:51 */
 
-namespace Actuallymab\LaravelComment\Models;
+namespace Ufutx\LaravelComment\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Comment
- * @package Actuallymab\LaravelComment\Models
+ * @package Ufutx\LaravelComment\Models
  *
  * @property string $comment
  * @property float $rate

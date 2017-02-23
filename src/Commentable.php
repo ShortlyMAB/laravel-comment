@@ -2,9 +2,9 @@
 /** actuallymab | 12.06.2016 - 02:13 */
 
 
-namespace Actuallymab\LaravelComment;
+namespace Ufutx\LaravelComment;
 
-use Actuallymab\LaravelComment\Models\Comment;
+use Ufutx\LaravelComment\Models\Comment;
 
 trait Commentable
 {

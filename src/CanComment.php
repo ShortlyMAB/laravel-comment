@@ -6,9 +6,9 @@
  * Time: 02:13
  */
 
-namespace Actuallymab\LaravelComment;
+namespace Ufutx\LaravelComment;
 
-use Actuallymab\LaravelComment\Models\Comment;
+use Ufutx\LaravelComment\Models\Comment;
 
 trait CanComment
 {

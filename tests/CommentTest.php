@@ -1,9 +1,9 @@
 <?php
 
-namespace Actuallymab\LaravelComment\Tests;
+namespace Ufutx\LaravelComment\Tests;
 
-use Actuallymab\LaravelComment\Tests\Models\Product;
-use Actuallymab\LaravelComment\Tests\Models\User;
+use Ufutx\LaravelComment\Tests\Models\Product;
+use Ufutx\LaravelComment\Tests\Models\User;
 use Faker\Generator;
 use Faker\Provider\Lorem;
 

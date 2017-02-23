@@ -1,6 +1,6 @@
 <?php
 
-namespace Actuallymab\LaravelComment;
+namespace Ufutx\LaravelComment;
 
 use Illuminate\Support\ServiceProvider;
 

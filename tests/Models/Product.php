@@ -2,9 +2,9 @@
 /** actuallymab | 12.06.2016 - 14:17 */
 
 
-namespace Actuallymab\LaravelComment\Tests\Models;
+namespace Ufutx\LaravelComment\Tests\Models;
 
-use Actuallymab\LaravelComment\Commentable;
+use Ufutx\LaravelComment\Commentable;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model

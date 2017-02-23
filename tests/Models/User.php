@@ -2,9 +2,9 @@
 /** actuallymab | 12.06.2016 - 14:16 */
 
 
-namespace Actuallymab\LaravelComment\Tests\Models;
+namespace Ufutx\LaravelComment\Tests\Models;
 
-use Actuallymab\LaravelComment\CanComment;
+use Ufutx\LaravelComment\CanComment;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model

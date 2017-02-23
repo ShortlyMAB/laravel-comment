@@ -1,8 +1,8 @@
 <?php
 
-namespace Actuallymab\LaravelComment\Tests;
+namespace Ufutx\LaravelComment\Tests;
 
-use Actuallymab\LaravelComment\LaravelCommentServiceProvider;
+use Ufutx\LaravelComment\LaravelCommentServiceProvider;
 use Orchestra\Database\ConsoleServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
