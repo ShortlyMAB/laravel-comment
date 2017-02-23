@@ -10,8 +10,8 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Mehmet Aydin Bahadir",
-            "email": "mehmet.aydin.bahadir@gmail.com",
+            "name": "Mehmet Aydin Bahadir zeng glore",
+            "email": "zglore@163.com",
             "homepage": "http://www.ufutx.com",
             "role": "Software Engineer"
         }
@@ -44,5 +44,8 @@
         "branch-alias": {
             "dev-master": "1.0-dev"
         }
+    }
+    "config": {
+        "sort-packages": true
     }
 }

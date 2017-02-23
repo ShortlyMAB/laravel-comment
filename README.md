@@ -1,4 +1,4 @@
-# Laravel Comment
+# Laravel Comment (forked from actuallymab/laravel-comment)
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
@@ -129,7 +129,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CONDUCT](CONDUCT.md) for details
 
 ## Security
 
-If you discover any security related issues, please email mehmet.aydin.bahadir@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email mehmet.aydin.bahadir@gmail.com  instead of using the issue tracker.
 
 ## Credits
 
