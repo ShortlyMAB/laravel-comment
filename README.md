@@ -11,10 +11,6 @@ Just another comment system for laravel projects.
 
  Laravel  | Laravel Comment
 :---------|:----------
- 5.0.x    | 0.1.x
- 5.1.x    | 0.1.x
- 5.2.x    | 0.1.x
- 5.3.x    | 0.2.x
  5.4.x    | 0.3.x
 
 ## Install
