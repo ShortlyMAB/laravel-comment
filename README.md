@@ -148,5 +148,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-packagist]: https://packagist.org/packages/ufutx/laravel-comment
 [link-travis]: https://travis-ci.org/ufutx/laravel-comment
 [link-downloads]: https://packagist.org/packages/ufutx/laravel-comment
-[link-author]: https://github.com/ufutx
+[link-author]: https://github.com/glore
 [link-contributors]: ../../contributors
