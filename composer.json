@@ -1,6 +1,7 @@
 {
     "name": "ufutx/laravel-comment",
     "type": "library",
+    "minimum-stability": "dev",
     "description": "Just another comment system for laravel projects.",
     "keywords": [
         "ufutx",
