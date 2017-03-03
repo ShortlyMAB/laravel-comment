@@ -4,6 +4,11 @@ All Notable changes to `Laravel Comment` will be documented in this file.
 
 Updates should follow the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [1.0.2] - 2017-03-03
+
+### Added
+- Merge to ufutx
+
 ## [0.2.1] - 2016-10-20
 
 ### Added
