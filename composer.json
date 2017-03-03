@@ -24,8 +24,8 @@
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit" : "5.*",
         "mockery/mockery": "~0.9.0",
-        "orchestra/testbench": "~3.4",
-        "orchestra/database": "3.4.x@dev"
+        "orchestra/testbench": "~3.0",
+        "orchestra/database": "~3.0"
     },
     "autoload": {
         "psr-4": {
