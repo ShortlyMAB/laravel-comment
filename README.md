@@ -100,11 +100,14 @@ class User extends Model {
 $user = App\User::find(1);
 $product = App\Product::find(1);
 
-// $user->comment(Commentable $model, $comment = '', $rate = 0);
-$user->comment($product, 'Lorem ipsum ..', 3);
+// $user->comment(Commentable $model, $comment = '', $rate = 0, $pic = null);
+$user->comment($product, 'Lorem ipsum ..', 3, 'http://images.ufutx.com/201702/09/49fe31fdf2d4f74709f2cb00e1a9c49a.jpeg@1e_1c_2o_1l_200h_200w_90q.src');
 
 // approve it -- if you are admin or you don't use mustBeApproved option, it is not necessary
 $product->comments[0]->approve();
+
+//comment user model record 
+$product->comments[0]->user
 
 // get avg rating -- it calculates approved average rate.
 $product->averageRate();
