@@ -18,6 +18,7 @@ class LaravelCommentServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../database/migrations/' => database_path('migrations')
         ], 'migrations');
+        //$this->publishConfig();
     }
 
     /**
@@ -27,5 +28,7 @@ class LaravelCommentServiceProvider extends ServiceProvider
      */
     public function register()
     {
+//        parent::register(); 
+ //       $this->mergeConfig();
     }
 }

@@ -24,6 +24,7 @@ class Comment extends Model
     protected $fillable = [
         'comment',
         'rate',
+        'pic',
         'approved',
         'commented_id',
         'commented_type'
@@ -59,4 +60,13 @@ class Comment extends Model
 
         return $this;
     }
+
+    public function user(){
+        /**
+         * todo: add config to set user model
+         */
+        $model = \App\Models\Member::class;//config('comment.user_model');
+        return $this->belongsTo($model, 'commented_id', 'uid');
+    }
+
 }
