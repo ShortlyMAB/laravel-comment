@@ -118,10 +118,10 @@ class CommentTest extends TestCase
     {
         $user = $this->createUser();
         $product = $this->createProduct();
-        
+
         $user->comment($product, $this->faker->sentence);
         $user->comment($product, $this->faker->sentence);
-        
+
         $this->assertEquals(2, $product->totalCommentCount());
     }
 
@@ -141,6 +141,23 @@ class CommentTest extends TestCase
 
         $product->comments[1]->approve();
         $this->assertEquals(2, $product->totalCommentCount());
+    }
+
+    /** @test */
+    public function comments_also_can_be_commentable()
+    {
+        $user = $this->createUser();
+        $product = $this->createProduct();
+
+        $user->comment($product, $this->faker->sentence);
+        $comment = $product->comments->first();
+        $user->comment($comment, $this->faker->sentence);
+
+        $this->assertEquals(1, $comment->totalCommentCount());
+
+        $comment = $product->comments->first()->comments->first();
+        $user->comment($comment, $this->faker->sentence);
+        $this->assertEquals(1, $comment->totalCommentCount());
     }
 
     /**

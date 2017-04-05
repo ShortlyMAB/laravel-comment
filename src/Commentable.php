@@ -10,7 +10,7 @@ trait Commentable
 {
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function comments()
     {

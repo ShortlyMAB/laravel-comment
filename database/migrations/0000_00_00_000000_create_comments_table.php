@@ -10,10 +10,12 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('commentable_id')->nullable();
+            $table->string('commentable_id')->nullable();
             $table->string('commentable_type')->nullable();
-            $table->integer('commented_id')->nullable();
+            $table->index(['commentable_id', 'commentable_type']);
+            $table->string('commented_id')->nullable();
             $table->string('commented_type')->nullable();
+            $table->index(['commented_id', 'commented_type']);
             $table->longText('comment');
             $table->boolean('approved')->default(true);
             $table->double('rate', 15, 8)->nullable();
