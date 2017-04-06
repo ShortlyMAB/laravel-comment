@@ -7,7 +7,6 @@ use \Actuallymab\LaravelComment\Models\Comment as BaseComment;
 
 class Comment extends BaseComment
 {
-
     use Commentable;
 
     protected $mustBeApproved = false;
