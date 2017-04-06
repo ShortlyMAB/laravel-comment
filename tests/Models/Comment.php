@@ -20,5 +20,4 @@ class Comment extends BaseComment
     {
         return $this->morphMany(Comment::class, 'commentable');
     }
-
 }

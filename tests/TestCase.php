@@ -6,7 +6,6 @@ use Actuallymab\LaravelComment\LaravelCommentServiceProvider;
 use Orchestra\Database\ConsoleServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
-/** actuallymab | 12.06.2016 - 14:21 */
 abstract class TestCase extends Orchestra
 {
     /**
