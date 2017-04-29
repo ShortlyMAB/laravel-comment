@@ -15,9 +15,11 @@ class LaravelCommentServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->publishes([
-            __DIR__.'/../database/migrations/' => database_path('migrations')
-        ], 'migrations');
+        if (! class_exists('CreateCommentsTable')) {
+            $this->publishes([
+                __DIR__.'/../database/migrations/' => database_path('migrations')
+            ], 'migrations');
+        }
         //$this->publishConfig();
     }
 
