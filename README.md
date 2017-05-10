@@ -11,7 +11,8 @@
 
  Laravel  | Laravel Comment
 :---------|:----------
- 5.4.x    | 0.3.x
+ 5.4.x    | 1.1.x
+ 5.2.x    | 0.3.x
 
 ## Install
 
