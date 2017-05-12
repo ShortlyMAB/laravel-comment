@@ -65,7 +65,7 @@ class Comment extends Model
         /**
          * todo: add config to set user model
          */
-        $model = \App\Models\Member::class;//config('comment.user_model');
+        $model = Config::get('auth.providers.users.model');
         return $this->belongsTo($model, 'commented_id', 'uid');
     }
 
