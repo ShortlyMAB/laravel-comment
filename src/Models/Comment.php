@@ -4,6 +4,7 @@
 namespace Ufutx\LaravelComment\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
 
 /**
  * Class Comment
