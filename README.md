@@ -25,8 +25,9 @@ Via Composer
 ``` bash
 $ composer require actuallymab/laravel-comment
 ```
+Laravel 5.5 uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
 
-Add service provider to your app.php file
+If you don't use auto-discovery, or using Laravel version < 5.5 Add service provider to your app.php file
 
 ``` php
 \Actuallymab\LaravelComment\LaravelCommentServiceProvider::class
