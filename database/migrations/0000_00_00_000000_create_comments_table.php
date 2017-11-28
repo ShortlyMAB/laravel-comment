@@ -14,7 +14,7 @@ class CreateCommentsTable extends Migration
             $table->string('commentable_type')->nullable();
             $table->integer('commented_id')->nullable();
             $table->string('commented_type')->nullable();
-            $table->longText('pic')->comment('comment pics');
+            $table->longText('pic')->comment('comment pics')->nullable();
             $table->longText('comment');
             $table->boolean('approved')->default(true);
             $table->double('rate', 15, 8)->nullable();
