@@ -59,4 +59,15 @@ class Comment extends Model
 
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function deny()
+    {
+        $this->approved = false;
+        $this->save();
+
+        return $this;
+    }
 }
