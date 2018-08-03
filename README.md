@@ -119,11 +119,10 @@ $product->averageRate();
 // get total comment count -- it calculates approved comments count.
 $product->totalCommentCount();
 ```
+## Usage in Quest user
 
-
-```
+``` php
 //create Quest User in simple class
-
 
 use Actuallymab\LaravelComment\CanComment;
  
@@ -131,6 +130,10 @@ class UserQuest
 {
 	use CanComment;
 }
+```
+##Use it in controller
+
+``` php
 
 //then use it in Auth check
 
