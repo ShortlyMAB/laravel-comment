@@ -120,6 +120,39 @@ $product->averageRate();
 $product->totalCommentCount();
 ```
 
+
+```
+//create Quest User in simple class
+
+
+use Actuallymab\LaravelComment\CanComment;
+ 
+class UserQuest 
+{
+	use CanComment;
+}
+
+//then use it in Auth check
+
+
+		if (Auth::check()){
+
+			$article = model::find($postid);
+			$user =  User::find(Auth::user()->id);
+			$user->comment($article,$_POST['comment'], 3);
+
+		}else{
+
+			$article = model::find($postid);
+			
+			$user = new UserQuest();
+			$user->comment($article,$_POST['comment'], 3,$request->name,$request->email);
+		}
+        
+
+```
+
+
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
