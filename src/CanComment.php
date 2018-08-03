@@ -19,7 +19,7 @@ trait CanComment
      * @param int $rate
      * @return $this
      */
-    public function comment($commentable, $commentText = '', $rate = 0,$name_sender = null,$email_sender = null)
+    public function comment($commentable, $commentText = '', $rate = 0, $name_sender = null, $email_sender = null)
     {
         $comment = new Comment([
             'comment'        => $commentText,
