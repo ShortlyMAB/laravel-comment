@@ -26,6 +26,8 @@ class Comment extends Model
         'rate',
         'approved',
         'commented_id',
+        'name_sender',
+        'email_sender',
         'commented_type'
     ];
 

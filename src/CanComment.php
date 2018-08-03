@@ -19,13 +19,15 @@ trait CanComment
      * @param int $rate
      * @return $this
      */
-    public function comment($commentable, $commentText = '', $rate = 0)
+    public function comment($commentable, $commentText = '', $rate = 0,$name_sender = null,$email_sender = null)
     {
         $comment = new Comment([
             'comment'        => $commentText,
             'rate'           => ($commentable->getCanBeRated()) ? $rate : null,
             'approved'       => ($commentable->mustBeApproved() && ! $this->isAdmin()) ? false : true,
-            'commented_id'   => $this->id,
+            'commented_id'   => empty($this->id) ? null : $this->id ,
+            'email_sender'   => $email_sender ,
+            'name_sender'   =>  $name_sender ,
             'commented_type' => get_class()
         ]);
 
