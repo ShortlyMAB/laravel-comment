@@ -25,9 +25,5 @@ class LaravelCommentServiceProvider extends ServiceProvider
                     database_path("migrations/{$timestamp}_create_comments_table.php")
             ], 'migrations');
         }
-
-        $this->publishes([
-            __DIR__ . '/../database/migrations/' => database_path('migrations')
-        ], 'migrations');
     }
 }
