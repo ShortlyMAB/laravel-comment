@@ -4,6 +4,8 @@
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
 [![Total Downloads][ico-downloads]][link-downloads]
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/actuallymab/laravel-comment/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/actuallymab/laravel-comment/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/actuallymab/laravel-comment/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/actuallymab/laravel-comment/?branch=master)
 
 Just another comment system for your awesome Laravel project.
 
