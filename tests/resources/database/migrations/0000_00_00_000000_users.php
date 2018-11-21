@@ -1,17 +1,22 @@
 <?php
-/** actuallymab | 12.06.2016 - 14:39 */
+declare(strict_types=1);
 
-class Users extends \Illuminate\Database\Migrations\Migration
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class Users extends Migration
 {
-    public function up()
+    public function up(): void
     {
-        Schema::create('users', function ($table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 100);
+            $table->boolean('is_admin')->default(false);
         });
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::drop('users');
     }
