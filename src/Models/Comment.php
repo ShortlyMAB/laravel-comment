@@ -1,71 +1,56 @@
 <?php
-/** actuallymab | 12.06.2016 - 01:51 */
+declare(strict_types=1);
 
 namespace Actuallymab\LaravelComment\Models;
 
+use Actuallymab\LaravelComment\Contracts\Commentable;
+use Actuallymab\LaravelComment\HasComments;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- * Class Comment
- * @package Actuallymab\LaravelComment\Models
- *
  * @property string $comment
  * @property float $rate
  * @property boolean $approved
- * @property integer $commentable_id
+ * @property string $commentable_id
  * @property string $commentable_type
- * @property integer $commented_id
+ * @property Model $commentable
+ * @property string $commented_id
  * @property string $commented_type
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property Model $commented
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
-class Comment extends Model
+class Comment extends Model implements Commentable
 {
-    protected $fillable = [
-        'comment',
-        'rate',
-        'approved',
-        'commented_id',
-        'commented_type'
-    ];
+    use HasComments;
+
+    protected $guarded = [];
 
     protected $casts = [
         'approved' => 'boolean'
     ];
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function commentable()
+    public function commentable(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
-     */
-    public function commented()
+    public function commented(): MorphTo
     {
         return $this->morphTo();
     }
 
-    /**
-     * @return $this
-     */
-    public function approve()
+    public function scopeApprovedComments(Builder $query): Builder
+    {
+        return $query->where('approved', true);
+    }
+
+    public function approve(): self
     {
         $this->approved = true;
-        $this->save();
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    public function deny()
-    {
-        $this->approved = false;
         $this->save();
 
         return $this;

@@ -1,31 +1,33 @@
 <?php
+declare(strict_types=1);
 
 namespace Actuallymab\LaravelComment\Tests;
 
 use Actuallymab\LaravelComment\LaravelCommentServiceProvider;
-use Orchestra\Database\ConsoleServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {
-    /**
-     * @return void
-     */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
+        $this->setUpDatabase();
+    }
+
+    private function setUpDatabase(): void
+    {
         $this->loadMigrationsFrom([
             '--database' => 'testing',
             '--realpath' => realpath(__DIR__ . '/resources/database/migrations'),
         ]);
+
+        include_once __DIR__ . '/../database/migrations/create_comments_table.php.stub';
+
+        (new \CreateCommentsTable)->up();
     }
 
-    /**
-     * @param \Illuminate\Foundation\Application $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('database.default', 'testing');
         $app['config']->set('database.connections.testing', [
@@ -35,15 +37,10 @@ abstract class TestCase extends Orchestra
         ]);
     }
 
-    /**
-     * @param \Illuminate\Foundation\Application $application
-     * @return array
-     */
-    public function getPackageProviders($application)
+    public function getPackageProviders($app): array
     {
         return [
             LaravelCommentServiceProvider::class,
-            ConsoleServiceProvider::class
         ];
     }
 }

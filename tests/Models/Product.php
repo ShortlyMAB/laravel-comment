@@ -1,50 +1,32 @@
 <?php
-/** actuallymab | 12.06.2016 - 14:17 */
-
+declare(strict_types=1);
 
 namespace Actuallymab\LaravelComment\Tests\Models;
 
-use Actuallymab\LaravelComment\Commentable;
+use Actuallymab\LaravelComment\Contracts\Commentable;
+use Actuallymab\LaravelComment\HasComments;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+/**
+ * @property string $name
+ * @property boolean $can_be_rated
+ * @property boolean $must_be_approved
+ */
+class Product extends Model implements Commentable
 {
-    use Commentable;
+    use HasComments;
 
-    protected $mustBeApproved = false;
-    protected $canBeRated = false;
+    protected $guarded = [];
 
-    protected $fillable = [
-        'name'
-    ];
-    
     public $timestamps = false;
 
-    /**
-     * @param $mustBeApproved
-     * @return $this
-     */
-    public function setMustBeApproved($mustBeApproved)
+    public function canBeRated(): bool
     {
-        $this->mustBeApproved = $mustBeApproved;
-        return $this;
+        return $this->can_be_rated;
     }
 
-    /**
-     * @param $canBeRated
-     * @return $this
-     */
-    public function setCanBeRated($canBeRated)
+    public function mustBeApproved(): bool
     {
-        $this->canBeRated = $canBeRated;
-        return $this;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
+        return $this->must_be_approved;
     }
 }

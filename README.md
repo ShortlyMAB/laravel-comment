@@ -5,7 +5,7 @@
 [![Build Status][ico-travis]][link-travis]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Just another comment system for laravel projects.
+Just another comment system for your awesome Laravel project.
 
 ## Version Compatibility
 
@@ -16,9 +16,8 @@ Just another comment system for laravel projects.
  5.2.x    | 0.1.x
  5.3.x    | 0.2.x
  5.4.x    | 0.3.x
- 5.5.x    | 0.4.x 
- 5.6.x    | 0.5.x
- 5.7.x    | 0.6.x
+ 
+For `>5.5` you can use `^1.0.0` version.
 
 ## Install
 
@@ -27,7 +26,6 @@ Via Composer
 ``` bash
 $ composer require actuallymab/laravel-comment
 ```
-Laravel 5.5 uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
 
 If you don't use auto-discovery, or using Laravel version < 5.5 Add service provider to your app.php file
 
@@ -35,91 +33,121 @@ If you don't use auto-discovery, or using Laravel version < 5.5 Add service prov
 \Actuallymab\LaravelComment\LaravelCommentServiceProvider::class
 ```
 
-Publish & Migrate comments table.
+Publish configurations and migrations, then migrate comments table.
+
 ``` bash
 $ php artisan vendor:publish
 $ php artisan migrate
 ```
 
 Add `CanComment` trait to your User model.
+
 ``` php
 use Actuallymab\LaravelComment\CanComment;
 ```
 
-Add `Commentable` trait to your commentable model(s).
+Add `Commentable` interface and `HasComments` trait to your commentable model(s).
+
 ``` php
-use Actuallymab\LaravelComment\Commentable;
+use Actuallymab\LaravelComment\Contracts\Commentable;
+use Actuallymab\LaravelComment\HasComments;
+
+class Product extends Model implements Commentable
+{
+    use HasComments;
+    
+    // ...   
+}
 ```
 
 If you want to have your own Comment Model create a new one and extend my Comment model.
+
 ``` php
-class Comment extends Actuallymab\LaravelComment\Comment
+use Actuallymab\LaravelComment\Models\Comment as LaravelComment;
+
+class Comment extends LaravelComment
 {
-  ...
+    // ...
 }
 ```
+
+and dont forget to update the model name in the `config/comment.php` file.
 
 Comment package comes with several modes.
 
-1- If you want to Users can rate your model(s) with comment set `canBeRated` to true in your `Commentable` model.
+1- If you want to users can rate your commentable models;
+
 ``` php
-class Product extends Model {
-  use Commentable;
+class Product extends Model implements Commentable 
+{
+    use HasComments;
 
-  protected $canBeRated = true;
+    public function canBeRated(): bool
+    {
+        return true; // default false
+    }
 
-  ...
+    //...
 }
 ```
 
-2- If you want to approve comments for your commentable models, you must set `mustBeApproved` to true in your `Commentable` model.
+2- If you want to approve comments for your commentable models;
+
 ``` php
-class Product extends Model {
-  use Commentable;
+class Product extends Model implements Commentable 
+{
+    use HasComments;
 
-  protected $mustBeApproved = true;
+    public function mustBeApproved(): bool
+    {
+        return true; // default false
+    }
 
-  ...
+    // ...
 }
 ```
 
-3- You don't want to approve comments for all users (think this as you really want to approve your own comments?). So add your `User` model an `isAdmin` method and return it true if user is admin.
+3- Sometimes you don't want to approve comments for all users;
 
 ``` php
-class User extends Model {
-  use CanComment;
+class User extends Model 
+{
+    use CanComment;
   
-  protected $fillable = [
-    'isAdmin',
-    ....
-  ];
+    protected $fillable = [
+        'isAdmin',
+        // ..
+    ];
 
-  public function isAdmin() {
-    return $this->isAdmin;
-  }
+    public function canCommentWithoutApprove(): bool
+    {
+        return $this->isAdmin;
+    }
 
-  ...
+    // ..
 }
 ```
 
 ## Usage
 
 ``` php
-$user = App\User::find(1);
-$product = App\Product::find(1);
+$user = App\User::first();
+$product = App\Product::first();
 
 // $user->comment(Commentable $model, $comment = '', $rate = 0);
 $user->comment($product, 'Lorem ipsum ..', 3);
 
-// approve it -- if you are admin or you don't use mustBeApproved option, it is not necessary
+// approve it -- if the user model `canCommentWithoutApprove()` or you don't use `mustBeApproved()`, it is not necessary
 $product->comments[0]->approve();
 
 // get avg rating -- it calculates approved average rate.
 $product->averageRate();
 
-// get total comment count -- it calculates approved comments count.
-$product->totalCommentCount();
+// get total comments count -- it calculates approved comments count.
+$product->totalCommentsCount();
 ```
+
+> Tip: You might want to look at the tests/CommentTest.php file to check all potential usages. 
 
 ## Change log
 

@@ -1,26 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace Actuallymab\LaravelComment\Tests;
 
 use Actuallymab\LaravelComment\Tests\Models\Product;
 use Actuallymab\LaravelComment\Tests\Models\User;
-use Faker\Generator;
-use Faker\Provider\Lorem;
+use Illuminate\Foundation\Testing\WithFaker;
 
-/** actuallymab | 12.06.2016 - 13:52 */
 class CommentTest extends TestCase
 {
-    private $faker;
-
-    /**
-     * @return void
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->faker = new Generator();
-        $this->faker->addProvider(Lorem::class);
-    }
+    use WithFaker;
 
     /** @test */
     public function it_belongs_to_a_can_comment_object()
@@ -33,69 +22,100 @@ class CommentTest extends TestCase
 
         $user->comment($product, $this->faker->sentence);
         $this->assertEquals(2, $product->comments()->count());
+
+        $this->assertTrue($product->comments()->first()->commentable->is($product));
+        $this->assertTrue($product->comments()->first()->commented->is($user));
     }
 
     /** @test */
-    public function it_must_be_unapproved_as_default_if_must_be_approved_property_is_true()
+    public function comment_can_be_checked()
     {
         $user = $this->createUser();
-        $product = $this->createProduct(false, true);
+        $product = $this->createProduct();
+
+        $user->comment($product, $this->faker->sentence);
+
+        $this->assertTrue($user->hasCommentsOn($product));
+    }
+
+    /** @test */
+    public function it_must_be_unapproved_as_default_if_must_be_approved_method_returns_true()
+    {
+        $user = $this->createUser();
+        $product = $this->createProductWithCommentsMustBeApproved();
 
         $user->comment($product, $this->faker->sentence);
         $this->assertFalse($user->comments[0]->approved);
     }
 
     /** @test */
-    public function it_must_be_approved_as_default_if_commented_by_an_admin()
+    public function it_must_be_approved_as_default_if_a_product_was_commented_by_an_admin()
     {
-        $user = $this->createUser(true);
-        $product = $this->createProduct(false, true);
+        $admin = $this->createAdmin();
+        $product = $this->createProductWithCommentsMustBeApproved();
 
-        $user->comment($product, $this->faker->sentence);
-        $this->assertTrue($user->comments[0]->approved);
+        $admin->comment($product, $this->faker->sentence);
+        $this->assertTrue($admin->comments[0]->approved);
     }
 
     /** @test */
     public function it_can_be_approved()
     {
         $user = $this->createUser();
-        $product = $this->createProduct(false, true);
+        $product = $this->createProductWithCommentsMustBeApproved();
 
         $user->comment($product, $this->faker->sentence);
+        $this->assertFalse($product->comments[0]->approved);
         $user->comments[0]->approve();
-        $this->assertTrue($product->comments[0]->approved);
+        $this->assertTrue($product->comments[0]->fresh()->approved);
     }
 
     /** @test */
     public function it_can_be_rated()
     {
         $user = $this->createUser();
-        $product = $this->createProduct(true);
+        $product = $this->createRateableProduct();
 
         $user->comment($product, $this->faker->sentence, 3);
         $this->assertEquals(3, $user->comments[0]->rate);
     }
 
     /** @test */
+    public function rate_does_not_make_sense_when_its_not_rateable_product()
+    {
+        $user = $this->createUser();
+        $product = $this->createProduct();
+
+        $user->comment($product, $this->faker->sentence, 3);
+        $this->assertEquals(0, $product->averageRate());
+    }
+
+    /** @test */
     public function it_can_calculate_average_rating_of_all_comments()
     {
         $user = $this->createUser();
-        $product = $this->createProduct(true);
+        $product = $this->createRateableProduct();
+
+        $this->assertEquals(0, $product->averageRate());
 
         $user->comment($product, $this->faker->sentence, 3);
-        $user->comment($product, $this->faker->sentence, 5);
+        $this->assertEquals(3, $product->averageRate());
 
+        $user->comment($product, $this->faker->sentence, 5);
         $this->assertEquals(4, $product->averageRate());
+
+        $user->comment($product, $this->faker->sentence, 3);
+        $this->assertEquals(3.67, $product->averageRate());
     }
 
     /** @test */
     public function it_must_calculate_average_rating_only_from_approved_comments_if_approve_option_enabled()
     {
-        $user = $this->createUser();
-        $product = $this->createProduct(true, true);
+        $admin = $this->createUser();
+        $product = $this->createRateableProductWithCommentsMustBeApproved();
 
-        $user->comment($product, $this->faker->sentence, 3);
-        $user->comment($product, $this->faker->sentence, 5);
+        $admin->comment($product, $this->faker->sentence, 3);
+        $admin->comment($product, $this->faker->sentence, 5);
 
         $this->assertEquals(0, $product->averageRate());
 
@@ -107,8 +127,8 @@ class CommentTest extends TestCase
         $this->assertEquals(2, $product->comments()->count());
         $this->assertEquals(4, $product->averageRate());
 
-        $user = $this->createUser(true);
-        $user->comment($product, $this->faker->sentence, 1);
+        $admin = $this->createAdmin();
+        $admin->comment($product, $this->faker->sentence, 1);
         $this->assertEquals(3, $product->comments()->count());
         $this->assertEquals(3, $product->averageRate());
     }
@@ -122,25 +142,29 @@ class CommentTest extends TestCase
         $user->comment($product, $this->faker->sentence);
         $user->comment($product, $this->faker->sentence);
 
-        $this->assertEquals(2, $product->totalCommentCount());
+        $this->assertEquals(2, $product->totalCommentsCount());
     }
 
     /** @test */
     public function it_must_calculate_only_approved_comments_as_total_comment_if_approve_option_enabled()
     {
         $user = $this->createUser();
-        $product = $this->createProduct(true, true);
+        $product = $this->createProductWithCommentsMustBeApproved();
 
         $user->comment($product, $this->faker->sentence);
         $user->comment($product, $this->faker->sentence);
 
-        $this->assertEquals(0, $product->totalCommentCount());
+        $this->assertEquals(0, $product->totalCommentsCount());
         $product->comments[0]->approve();
 
-        $this->assertEquals(1, $product->totalCommentCount());
+        $this->assertEquals(1, $product->totalCommentsCount());
 
         $product->comments[1]->approve();
-        $this->assertEquals(2, $product->totalCommentCount());
+        $this->assertEquals(2, $product->totalCommentsCount());
+
+        $admin = $this->createAdmin();
+        $admin->comment($product, $this->faker->sentence);
+        $this->assertEquals(3, $product->totalCommentsCount());
     }
 
     /** @test */
@@ -153,36 +177,44 @@ class CommentTest extends TestCase
         $comment = $product->comments->first();
         $user->comment($comment, $this->faker->sentence);
 
-        $this->assertEquals(1, $comment->totalCommentCount());
+        $this->assertEquals(1, $comment->comments()->count());
 
         $comment = $product->comments->first()->comments->first();
         $user->comment($comment, $this->faker->sentence);
-        $this->assertEquals(1, $comment->totalCommentCount());
+        $this->assertEquals(1, $comment->comments()->count());
     }
 
-    /**
-     * @param bool $isAdmin
-     * @return User
-     */
-    protected function createUser($isAdmin = false)
+    protected function createUser(bool $isAdmin = false): User
     {
-        $user = User::create([
-            'name' => $this->faker->word
-        ]);
-
-        $user->isAdmin = $isAdmin;
-        return $user;
+        return User::create(['name' => $this->faker->name, 'is_admin' => $isAdmin]);
     }
 
-    /**
-     * @param bool $canBeRated
-     * @param bool $mustBeApproved
-     * @return Product
-     */
-    protected function createProduct($canBeRated = false, $mustBeApproved = false)
+    protected function createAdmin(): User
+    {
+        return $this->createUser(true);
+    }
+
+    protected function createProduct(bool $canBeRated = false, bool $mustBeApproved = false): Product
     {
         return Product::create([
-            'name' => $this->faker->word
-        ])->setCanBeRated($canBeRated)->setMustBeApproved($mustBeApproved);
+            'name'             => $this->faker->word,
+            'can_be_rated'     => $canBeRated,
+            'must_be_approved' => $mustBeApproved
+        ]);
+    }
+
+    protected function createRateableProduct(): Product
+    {
+        return $this->createProduct(true);
+    }
+
+    protected function createProductWithCommentsMustBeApproved(): Product
+    {
+        return $this->createProduct(false, true);
+    }
+
+    protected function createRateableProductWithCommentsMustBeApproved(): Product
+    {
+        return $this->createProduct(true, true);
     }
 }
