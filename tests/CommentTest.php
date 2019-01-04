@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Actuallymab\LaravelComment\Tests;
 
+use Actuallymab\LaravelComment\Models\Comment;
 use Actuallymab\LaravelComment\Tests\Models\Product;
 use Actuallymab\LaravelComment\Tests\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -25,6 +26,15 @@ class CommentTest extends TestCase
 
         $this->assertTrue($product->comments()->first()->commentable->is($product));
         $this->assertTrue($product->comments()->first()->commented->is($user));
+    }
+
+    /** @test */
+    public function comment_object_is_returned_after_comment_operation()
+    {
+        $user = $this->createUser();
+        $product = $this->createProduct();
+
+        $this->assertInstanceOf(Comment::class, $user->comment($product, $this->faker->sentence));
     }
 
     /** @test */

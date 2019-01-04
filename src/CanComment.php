@@ -4,23 +4,26 @@ declare(strict_types=1);
 namespace Actuallymab\LaravelComment;
 
 use Actuallymab\LaravelComment\Contracts\Commentable;
+use Actuallymab\LaravelComment\Models\Comment;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait CanComment
 {
-    public function comment(Commentable $commentable, string $commentText = '', int $rate = 0): self
+    public function comment(Commentable $commentable, string $commentText = '', int $rate = 0): Comment
     {
         $commentModel = config('comment.model');
 
-        $commentable->comments()->save(new $commentModel([
+        $comment = new $commentModel([
             'comment'        => $commentText,
             'rate'           => $commentable->canBeRated() ? $rate : null,
             'approved'       => $commentable->mustBeApproved() && !$this->canCommentWithoutApprove() ? false : true,
             'commented_id'   => $this->primaryId(),
             'commented_type' => get_class(),
-        ]));
+        ]);
 
-        return $this;
+        $commentable->comments()->save($comment);
+
+        return $comment;
     }
 
     public function canCommentWithoutApprove(): bool
