@@ -46,6 +46,14 @@ Add `CanComment` trait to your User model.
 
 ``` php
 use Actuallymab\LaravelComment\CanComment;
+
+class User extends Model
+{
+    use CanComment;
+    
+    // ...   
+}
+
 ```
 
 Add `Commentable` interface and `HasComments` trait to your commentable model(s).
