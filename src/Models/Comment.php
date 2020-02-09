@@ -55,4 +55,13 @@ class Comment extends Model implements Commentable
 
         return $this;
     }
+    
+    public function disapprove(): self
+    {
+        $this->approved = false;
+        $this->save();
+
+        return $this;
+    }
+
 }
