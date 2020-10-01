@@ -18,7 +18,7 @@ trait CanComment
             'rate'           => $commentable->canBeRated() ? $rate : null,
             'approved'       => $commentable->mustBeApproved() && !$this->canCommentWithoutApprove() ? false : true,
             'commented_id'   => $this->primaryId(),
-            'commented_type' => get_class(),
+            'commented_type' => $this->getMorphClass(),
         ]);
 
         $commentable->comments()->save($comment);
@@ -41,7 +41,7 @@ trait CanComment
         return $this->comments()
             ->where([
                 'commentable_id'   => $commentable->primaryId(),
-                'commentable_type' => get_class($commentable),
+                'commentable_type' => $commentable->getMorphClass(),
             ])
             ->exists();
     }
